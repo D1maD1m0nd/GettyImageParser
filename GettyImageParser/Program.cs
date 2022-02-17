@@ -11,7 +11,9 @@ html.LoadHtml(@"
       <head>
         <meta content='Getty Images' property='og:site_name'>
         <meta content='Russian Footage' itemprop='creditText' />
-                                                    </head>
+          <meta
+        content='https://media.gettyimages.com/videos/an-aerial-view-of-a-moscow-cityscape-in-winter-day-video-id1303150754?s=170x170'
+    property='og:image' />                                           </head>
       <body>
         <div>
           <p class='content'>Fizzler</p>
@@ -39,9 +41,13 @@ document.QuerySelectorAll("body p");
 // yields [<p class="content">Fizzler</p>]
 document.QuerySelectorAll("p:first-child");
 
-var siteName = document.SelectSingleNode("//meta[@property='og:site_name']");
-var name = siteName.Attributes["content"].Value;
+var siteNameNode = document.SelectSingleNode("//meta[@property='og:site_name']");
+var name = siteNameNode.Attributes["content"].Value;
 Console.WriteLine(name);
-var companyName = document.SelectSingleNode("//meta[@itemprop='creditText']");
-var cName = companyName.Attributes["content"].Value;
-Console.WriteLine(cName);
+var companyNameNode = document.SelectSingleNode("//meta[@itemprop='creditText']");
+var companyName = companyNameNode.Attributes["content"].Value;
+Console.WriteLine(companyName);
+
+var previewLinkNode = document.SelectSingleNode("//meta[@property='og:image']");
+var preview = previewLinkNode.Attributes["content"].Value;
+Console.WriteLine(preview);
