@@ -18,3 +18,4 @@ C:\Users\dima\RiderProjects\GettyImageParser\GettyImageParser\obj\Debug\net6.0\G
 C:\Users\dima\RiderProjects\GettyImageParser\GettyImageParser\obj\Debug\net6.0\ref\GettyImageParser.dll
 C:\Users\dima\RiderProjects\GettyImageParser\GettyImageParser\obj\Debug\net6.0\GettyImageParser.pdb
 C:\Users\dima\RiderProjects\GettyImageParser\GettyImageParser\obj\Debug\net6.0\GettyImageParser.genruntimeconfig.cache
+C:\Users\dima\RiderProjects\GettyImageParser\GettyImageParser\bin\Debug\net6.0\CsvHelper.dll

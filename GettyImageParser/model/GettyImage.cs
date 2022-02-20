@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using System.Runtime.Intrinsics.Arm;
 using HtmlAgilityPack;
 
 namespace GettyImageParser.model;
@@ -11,6 +12,7 @@ public class GettyImage
     public string preview { get; set; }
     public string duration { get; set; }
     public byte[] imageByteArray { get; set; }
+    public string usage { get; set; }
 
     public GettyImage GetData(string code)
     {
@@ -40,20 +42,43 @@ public class GettyImage
   
 
         var authorNode = document.SelectSingleNode("//meta[@itemprop='author']");
-        author = authorNode.Attributes["content"].Value;
+        if (authorNode != null)
+        {
+            author = authorNode.Attributes["content"].Value;
+        }
+       
   
-        var siteNameNode = document.SelectSingleNode("//meta[@property='og:site_name']");
-        name = siteNameNode.Attributes["content"].Value;
+        var siteNameNode = document.SelectSingleNode("//meta[@property='og:title']");
+        if (siteNameNode != null)
+        {
+            name = siteNameNode.Attributes["content"].Value;
+        }
+        
   
         var companyNameNode = document.SelectSingleNode("//meta[@itemprop='creditText']");
-        companyName = companyNameNode.Attributes["content"].Value;
+        if (companyNameNode != null)
+        {
+            companyName = companyNameNode.Attributes["content"].Value;
+        }
 
         var previewLinkNode = document.SelectSingleNode("//meta[@property='og:image']");
-        preview = previewLinkNode.Attributes["content"].Value;
-  
+        if (previewLinkNode != null)
+        {
+            preview = previewLinkNode.Attributes["content"].Value;
+        }
+
         var durationNode = document.SelectSingleNode("//div[@class='asset-detail asset-detail--location']");
-        duration = durationNode.PreviousSibling.InnerText;
-  
+        if (durationNode != null)
+        {
+            duration = durationNode.PreviousSibling.InnerText;
+        }
+      
+        var usageNode = document.SelectSingleNode("//div[@class='asset-description__title']");
+        if (usageNode != null)
+        {
+            usage = usageNode.InnerText;
+        }
+       
     
         using (var webClient = new WebClient())
         {
