@@ -25,11 +25,12 @@ public class Utils
         string pathCsvFile = @"C:\Users\dima\Downloads\sales_report_items_data_export_798_799_800_2022-02-21.csv";
         var file = File.ReadAllBytes(pathCsvFile);
         var list = new List<PondReport>(100);
+        var config = new CsvHelper.Configuration.Configuration(CultureInfo.InvariantCulture);
         using (var memStream = new MemoryStream(file))
         {
             using (StreamReader streamReader = new StreamReader(memStream))
             {
-                using (CsvReader csvReader = new CsvReader(streamReader, CultureInfo.InvariantCulture))
+                using (CsvReader csvReader = new CsvReader(streamReader, config, false))
                 {
                     // получаем строки
                     var programmingLanguages =
@@ -42,11 +43,13 @@ public class Utils
                 }
             }
         }
-
+        
+        list.Sort();
         var rufootage1 = list.FindAll(i => i.UserName == "Rufootage1");
         var rufootage2 = list.FindAll(i => i.UserName == "Rufootage2");
         var rufootage3 = list.FindAll(i => i.UserName == "Rufootage3");
         var rufootage4 = list.FindAll(i => i.UserName == "Rufootage4");
+        
         new Thread(a =>WriteCsv(rufootage1, "repord_1")).Start();
         new Thread(a => WriteCsv(rufootage2, "repord_2")).Start();
         new Thread(a =>WriteCsv(rufootage3, "repord_3")).Start();
@@ -57,9 +60,11 @@ public class Utils
     {
         if (list.Count > 0)
         {
+            var config = new CsvHelper.Configuration.Configuration(CultureInfo.InvariantCulture);
+            config.Delimiter = ",";
             using var stream = new MemoryStream();
             using var writer = new StreamWriter(stream);
-            using var csv = new CsvWriter(writer, CultureInfo.InvariantCulture);
+            using var csv = new CsvWriter(writer, false);
             csv.WriteRecords(list);
             var file = stream.ToArray();
             File.WriteAllBytes($"{fileName}.csv", file);

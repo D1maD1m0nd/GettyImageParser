@@ -2,7 +2,7 @@
 
 namespace GettyImageParser.model;
 
-public class PondReport
+public class PondReport : IComparable
 {
     [Name("id")]
     public int Id { get; set;}
@@ -50,4 +50,10 @@ public class PondReport
     public string UpdateBy { get; set; }
     [Name("updated_at")]
     public string UpdatedAt { get; set; }
+
+    public int CompareTo(object? obj)
+    {
+        if(obj is PondReport pondReport) return String.Compare(UserName, pondReport.UserName, StringComparison.Ordinal);
+        throw new ArgumentException("Некорректное значение параметра");
+    }
 }
