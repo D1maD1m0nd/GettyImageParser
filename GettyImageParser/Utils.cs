@@ -22,44 +22,47 @@ public class Utils
     public static void CsvReader()
     {
         // указываем путь к файлу csv
-        string pathCsvFile = @"C:\Users\dima\Desktop\test.csv";
- 
-        using (StreamReader streamReader = new StreamReader(pathCsvFile))
+        string pathCsvFile = @"C:\Users\dima\Downloads\sales_report_items_data_export_798_799_800_2022-02-21.csv";
+        var file = File.ReadAllBytes(pathCsvFile);
+        var list = new List<PondReport>(100);
+        using (var memStream = new MemoryStream(file))
         {
-            using (CsvReader csvReader = new CsvReader(streamReader, CultureInfo.InvariantCulture))
+            using (StreamReader streamReader = new StreamReader(memStream))
             {
-                // получаем строки
-                var programmingLanguages =
-                    csvReader.GetRecords<ProgrammingLanguage>();
-
-                foreach (var item in programmingLanguages)
+                using (CsvReader csvReader = new CsvReader(streamReader, CultureInfo.InvariantCulture))
                 {
-                    Console.WriteLine($"{item.Developer} {item.Name}");
+                    // получаем строки
+                    var programmingLanguages =
+                        csvReader.GetRecords<PondReport>();
+
+                    foreach (var item in programmingLanguages)
+                    {
+                        list.Add(item);
+                    }
                 }
             }
         }
+
+        var rufootage1 = list.FindAll(i => i.UserName == "Rufootage1");
+        var rufootage2 = list.FindAll(i => i.UserName == "Rufootage2");
+        var rufootage3 = list.FindAll(i => i.UserName == "Rufootage3");
+        var rufootage4 = list.FindAll(i => i.UserName == "Rufootage4");
+        new Thread(a =>WriteCsv(rufootage1, "repord_1")).Start();
+        new Thread(a => WriteCsv(rufootage2, "repord_2")).Start();
+        new Thread(a =>WriteCsv(rufootage3, "repord_3")).Start();
+        new Thread(a =>WriteCsv(rufootage4, "repord_4")).Start();
     }
 
-    public static void WriteCsv()
+    public static void WriteCsv<T>( List<T> list, string fileName)
     {
-        var list = new List<Data>(1000);
-        var random = new Random();
-        for (var i = 0; i < 10000; i++)
+        if (list.Count > 0)
         {
-            var str = random.Next(1, 1000000).ToString();
-            list.Add(new Data
-            {
-                Id = str,
-                Name = (i * random.Next(50, 1233)).ToString(),
-                UUID = Guid.NewGuid().ToString()
-            });
-        }
-        string pathCsvFile = @"C:\Users\dima\Desktop\test1.csv";
-        using (var writer = new StreamWriter(pathCsvFile))
-        using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
-        {
+            using var stream = new MemoryStream();
+            using var writer = new StreamWriter(stream);
+            using var csv = new CsvWriter(writer, CultureInfo.InvariantCulture);
             csv.WriteRecords(list);
+            var file = stream.ToArray();
+            File.WriteAllBytes($"{fileName}.csv", file);
         }
-
     }
 }

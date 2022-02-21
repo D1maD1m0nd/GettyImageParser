@@ -1,0 +1,5 @@
+id,user_name,report_id,sale_date_time,transaction_id,content_id,video_standard,content_type,currency_conversion_rate,price_standard_local,price_edited_local,price_edit_reason_id,editReason,delete_item,delete_reason_id,deleteReason,reduced_commission,commission_rate,offset,media_size_id,minimum_price,updated_by,updated_at
+133750,Rufootage2,798,2022-02-02 06:44:41,350c0aa6-d78d-410f-902d-aa7354c1957e,10852334,4,Video HD (1080),75.847,9700.000,9700.000,0,None,0,0,-,34,35.00,0,2,6300,Rufootage1,2022-02-04 06:43:57
+134040,Rufootage2,798,2022-02-18 07:15:30,f4b372b9-1c7e-4934-b570-97f5396a4338,10852334,4,Video HD (1080),75.847,9700.000,9700.000,0,None,0,0,-,34,35.00,0,2,6300,,2022-02-18 07:15:30
+133757,Rufootage2,798,2022-02-02 07:11:06,d798423d-021b-4d4e-998e-3aa899469888,74177646,4,Video HD (1080),75.847,9700.000,9700.000,0,None,1,7,Wrong Item,34,35.00,0,2,6300,Rufootage1,2022-02-02 07:11:27
+134054,Rufootage2,798,2022-02-18 07:44:26,6d321c6b-589e-41b0-910e-f29e78521974,95848651,4,Video HD (1080),75.847,9700.0
