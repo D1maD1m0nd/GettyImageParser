@@ -6,6 +6,7 @@ namespace GettyImageParser.model;
 
 public class GettyImage
 {
+    public string id { get; set; }
     public string author { get; set; }
     public string name { get; set; }
     public string companyName { get; set; }
@@ -16,6 +17,7 @@ public class GettyImage
 
     public GettyImage GetData(string code)
     {
+        id = code;
         var url = $"https://www.gettyimages.com/search/2/image?phrase={code}";
         var uri = new Uri(url);
         var html = getHtml(uri);
